@@ -1,0 +1,6 @@
+name = "monday-tableau-connector-new"
+compatibility_date = "2025-09-11"
+
+[site]
+bucket = "."
+entry-point = "workers-site"
