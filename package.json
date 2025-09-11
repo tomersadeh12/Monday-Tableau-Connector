@@ -1,8 +1,8 @@
 {
-  "name": "${PROJECT_NAME}",
+  "name": "monday-wdc",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "mondayConnector.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
