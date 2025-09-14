@@ -44,7 +44,7 @@ class MondayApiService extends ApiService {
                             "people", "status", "person", "status2", "check",
                             "dropdown", "dropdown5", "dropdown3", "formula",
                             "dup__of_total_ttm", "formula5", "date24", "date__1",
-                            "date09", "date6", "date3", "date23", "date27",
+                            "date09", "date2", "date6", "date3", "date23", "date27",
                             "date5", "date0"
                         ]) { id text value }
                         client_data: linked_items(

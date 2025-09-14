@@ -12,28 +12,60 @@ class ColumnValueTransformer extends DataTransformer {
 
     transform(columnValues) {
         const result = {};
-        
+
         columnValues.forEach(col => {
             const targetField = this.columnMappings[col.id];
             if (targetField) {
-                result[targetField] = this._transformValue(col, targetField);
+                result[targetField] = this._transformValue(col, targetField, columnValues);
             }
         });
 
         return result;
     }
 
-    _transformValue(col, fieldName) {
+    _transformValue(col, fieldName, allColumns = []) {
         switch (fieldName) {
             case "NMHM":
                 return col.text === "v" || col.text === "true";
-            case "Onboarding_Total_TTM":
             case "Onboarding_Internal_TTM":
+                return this._calculateInternalTTM(allColumns);
             case "Onboarding_Partner_TTM":
-                return parseFloat(col.text) || 0;
+                return this._calculatePartnerTTM(allColumns);
+            case "Onboarding_Total_TTM":
+                const internalTTM = this._calculateInternalTTM(allColumns);
+                const partnerTTM = this._calculatePartnerTTM(allColumns);
+                return internalTTM + partnerTTM;
             default:
                 return col.text;
         }
+    }
+
+    _calculateInternalTTM(columns) {
+        const date24 = this._getDateValue(columns, 'date24'); // ApplicationCreationDate
+        const date09 = this._getDateValue(columns, 'date09'); // Submitted to partner
+
+        if (!date24 || !date09) return 0;
+
+        const diffTime = date09 - date24;
+        return Math.floor(diffTime / (1000 * 60 * 60 * 24)); // Convert to days
+    }
+
+    _calculatePartnerTTM(columns) {
+        const date2 = this._getDateValue(columns, 'date2');   // MID received date
+        const date09 = this._getDateValue(columns, 'date09'); // Submitted to partner
+
+        if (!date2 || !date09) return 0;
+
+        const diffTime = date2 - date09;
+        return Math.floor(diffTime / (1000 * 60 * 60 * 24)); // Convert to days
+    }
+
+    _getDateValue(columns, columnId) {
+        const column = columns.find(col => col.id === columnId);
+        if (!column || !column.text) return null;
+
+        const date = new Date(column.text);
+        return isNaN(date.getTime()) ? null : date;
     }
 }
 

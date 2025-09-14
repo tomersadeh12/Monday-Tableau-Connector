@@ -26,9 +26,7 @@ class SchemaConfig {
                 { id: "Internal_Withdrawal_Date", dataType: tableau.dataTypeEnum.date },
                 { id: "External_Withdrawal_Date", dataType: tableau.dataTypeEnum.date },
                 { id: "Application_on_Hold_Date", dataType: tableau.dataTypeEnum.date },
-                { id: "linked_item_id", dataType: tableau.dataTypeEnum.string },
-                { id: "linked_item_name", dataType: tableau.dataTypeEnum.string },
-                { id: "subitem_id", dataType: tableau.dataTypeEnum.string }
+                { id: "MID_Received_Date", dataType: tableau.dataTypeEnum.date },
             ]
         };
     }
@@ -55,7 +53,8 @@ class SchemaConfig {
             "date23": "Rejection_Withdrawal_Date",
             "date27": "Internal_Withdrawal_Date",
             "date5": "External_Withdrawal_Date",
-            "date0": "Application_on_Hold_Date"
+            "date0": "Application_on_Hold_Date",
+            "date2": "MID_Received_Date"
         };
     }
 }
